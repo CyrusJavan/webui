@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"io"
 	"path/filepath"
+	"strings"
 
 	"github.com/hashicorp/go-hclog"
 	"github.com/labstack/echo"
@@ -68,5 +69,8 @@ func (r *renderer) loadTmpls() error {
 
 func (r *renderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
 	r.loadTmpls()
-	return r.tmpls[name].ExecuteTemplate(w, "base", data)
+	d := echo.Map{}
+	d["data"] = data
+	d["title"] = strings.Title(strings.ReplaceAll(name, "-", " "))
+	return r.tmpls[name].ExecuteTemplate(w, "base", d)
 }

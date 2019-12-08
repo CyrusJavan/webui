@@ -8,7 +8,9 @@
           {{ template "nav" . }}
         </div>
         <div class="main-content">
+        {{ with .data }}
           {{ template "content" . }}
+        {{ end }}
         </div>
       </div>
       {{ template "footer" . }}

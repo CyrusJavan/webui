@@ -50,6 +50,7 @@ func (s *Server) groupSearch(c echo.Context) error {
 		d["result"] = res
 	}
 	d["query"] = query
+	d["name"] = "Group"
 
-	return c.Render(http.StatusOK, "group-search", d)
+	return c.Render(http.StatusOK, "search", d)
 }

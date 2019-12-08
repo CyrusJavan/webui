@@ -49,6 +49,7 @@ func (s *Server) entitySearch(c echo.Context) error {
 		d["result"] = res
 	}
 	d["query"] = query
+	d["name"] = "Entity"
 
-	return c.Render(http.StatusOK, "entity-search", d)
+	return c.Render(http.StatusOK, "search", d)
 }

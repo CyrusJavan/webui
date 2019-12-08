@@ -10,12 +10,12 @@
 
   <form>
     <fieldset>
-      <legend>Entity Search Query</legend>
+      <legend>{{ .name }} Search Query</legend>
 
       <input type="search"
              id="query"
              name="query"
-             placeholder="ID:*"
+             placeholder={{ if eq .name "Entity" }}"ID:*"{{ else }}"Name:*"{{ end }}
              required="yes"
              autofocus="yes" />
       <input type="submit" />
@@ -29,12 +29,22 @@
       <th>ID</th>
       <th>Display Name</th>
     </tr>
-    {{ range $index, $element := .result }}
-    <tr>
-      <td>{{ $element.Number }}</td>
-      <td><a href="/entity/info/{{ $element.ID }}">{{ $element.ID }}</a></td>
-      <td>{{ $element.Meta.DisplayName }}</td>
-    </tr>
+    {{ if eq .name "Entity" }}
+      {{ range $index, $element := .result }}
+      <tr>
+        <td>{{ $element.Number }}</td>
+        <td><a href="/entity/info/{{ $element.ID }}">{{ $element.ID }}</a></td>
+        <td>{{ $element.Meta.DisplayName }}</td>
+      </tr>
+      {{ end }}
+    {{ else }}
+      {{ range $index, $element := .result }}
+      <tr>
+        <td>{{ $element.Number }}</td>
+        <td><a href="/group/info/{{ $element.Name }}">{{ $element.Name }}</a></td>
+        <td>{{ $element.DisplayName }}</td>
+      </tr>
+      {{ end }}
     {{ end }}
   </table>
   {{ else }}
